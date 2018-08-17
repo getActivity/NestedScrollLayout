@@ -2,7 +2,7 @@
 
 ![](NestedScrollWebView.gif)
 
-> [点击此处下载Demo]([最新安装包下载地址](https://raw.githubusercontent.com/getActivity/Markdown/master/app.apk))
+> [点击此处下载apk](https://raw.githubusercontent.com/getActivity/Markdown/master/app.apk)
 
 > 最新日志：解决ToolBar滚动的过快的Bug
 
