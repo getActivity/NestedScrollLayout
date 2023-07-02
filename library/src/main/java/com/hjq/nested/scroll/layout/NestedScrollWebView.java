@@ -1,9 +1,7 @@
-package com.hjq.md.widget;
+package com.hjq.nested.scroll.layout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.ViewCompat;
@@ -12,51 +10,42 @@ import android.view.MotionEvent;
 import android.webkit.WebView;
 
 /**
- * NestedScrollWebView
+ *    author : Android 轮子哥
+ *    github : https://github.com/getActivity/NestedScrollLayout
+ *    time   : 2020/08/18
+ *    desc   : 支持嵌套滚动的 WebView
  */
 public class NestedScrollWebView extends WebView implements NestedScrollingChild {
 
-    private NestedScrollingChildHelper mChildHelper;
+    private final NestedScrollingChildHelper mChildHelper;
 
     private int mLastMotionY;
 
     private final int[] mScrollOffset = new int[2];
     private final int[] mScrollConsumed = new int[2];
 
-    private int mNestedYOffset;
+    private int mNestedOffsetY;
     private boolean mChange;
 
     public NestedScrollWebView(Context context) {
         super(context);
-        init();
     }
 
     public NestedScrollWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public NestedScrollWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public NestedScrollWebView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
     }
 
-    public NestedScrollWebView(Context context, AttributeSet attrs, int defStyleAttr, boolean privateBrowsing) {
-        super(context, attrs, defStyleAttr, privateBrowsing);
-        init();
-    }
-
-    private void init() {
-        if (mChildHelper == null) {
-            mChildHelper = new NestedScrollingChildHelper(this);
-            setNestedScrollingEnabled(true);
-        }
+    {
+        mChildHelper = new NestedScrollingChildHelper(this);
+        setNestedScrollingEnabled(true);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -69,12 +58,12 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
         final int action = event.getActionMasked();
 
         if (action == MotionEvent.ACTION_DOWN) {
-            mNestedYOffset = 0;
+            mNestedOffsetY = 0;
         }
 
         int y = (int) event.getY();
 
-        event.offsetLocation(0, mNestedYOffset);
+        event.offsetLocation(0, mNestedOffsetY);
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -89,7 +78,7 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
                 if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)) {
                     deltaY -= mScrollConsumed[1];
                     trackedEvent.offsetLocation(0, mScrollOffset[1]);
-                    mNestedYOffset += mScrollOffset[1];
+                    mNestedOffsetY += mScrollOffset[1];
                 }
 
                 mLastMotionY = y - mScrollOffset[1];
@@ -102,20 +91,20 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
                 if (dispatchNestedScroll(0, dyConsumed, 0, dyUnconsumed, mScrollOffset)) {
                     mLastMotionY -= mScrollOffset[1];
                     trackedEvent.offsetLocation(0, mScrollOffset[1]);
-                    mNestedYOffset += mScrollOffset[1];
+                    mNestedOffsetY += mScrollOffset[1];
                 }
 
-                if(mScrollConsumed[1]==0 && mScrollOffset[1]==0) {
-                    if(mChange){
+                if(mScrollConsumed[1] == 0 && mScrollOffset[1] == 0) {
+                    if(mChange) {
                         mChange =false;
                         trackedEvent.setAction(MotionEvent.ACTION_DOWN);
                         super.onTouchEvent(trackedEvent);
-                    }else {
+                    } else {
                         result = super.onTouchEvent(trackedEvent);
                     }
                     trackedEvent.recycle();
-                }else{
-                    if(!mChange){
+                } else{
+                    if(!mChange) {
                         mChange = true;
                         super.onTouchEvent(MotionEvent.obtain(0,0,MotionEvent.ACTION_CANCEL,0,0,0));
                     }
@@ -125,16 +114,21 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
                 //trackedEvent.recycle();
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
+            case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 stopNestedScroll();
                 result = super.onTouchEvent(event);
                 break;
+            default:
+                break;
         }
         return result;
     }
 
-    // NestedScrollingChild
+    /**
+     * {@link NestedScrollingChild}
+     */
 
     @Override
     public void setNestedScrollingEnabled(boolean enabled) {
