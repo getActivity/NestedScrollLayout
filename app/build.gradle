@@ -36,9 +36,9 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
+    applicationVariants.configureEach { variant ->
         // apk 输出文件名配置
-        variant.outputs.all { output ->
+        variant.outputs.configureEach { output ->
             outputFileName = rootProject.getName() + '.apk'
         }
     }
