@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
  *    author : Android 轮子哥
  *    github : https://github.com/getActivity/NestedScrollLayout
  *    time   : 2023/07/02
- *    desc   : 支持嵌套滚动的 FrameLayout
+ *    desc   : 支持嵌套滚动的 RelativeLayout
  */
 public class NestedScrollRelativeLayout extends RelativeLayout implements NestedScrollingChild, NestedScrollingParent {
 
@@ -71,7 +71,10 @@ public class NestedScrollRelativeLayout extends RelativeLayout implements Nested
 
       switch (actionMasked) {
          case MotionEvent.ACTION_DOWN: {
-            mVelocityTracker.addMovement(ev);
+            if (mVelocityTracker != null) {
+               mVelocityTracker.clear();
+               mVelocityTracker.addMovement(event);
+            }
 
             mLastMotionY = (int) event.getY();
             mActivePointerId = event.getPointerId(0);
@@ -81,6 +84,8 @@ public class NestedScrollRelativeLayout extends RelativeLayout implements Nested
          case MotionEvent.ACTION_MOVE:
             final int activePointerIndex = event.findPointerIndex(mActivePointerId);
             if (activePointerIndex == -1) {
+               mActivePointerId = INVALID_POINTER;
+               endDrag();
                break;
             }
 
@@ -105,7 +110,7 @@ public class NestedScrollRelativeLayout extends RelativeLayout implements Nested
             }
 
             if (mBeingDragged) {
-               mVelocityTracker.addMovement(ev);
+               mVelocityTracker.addMovement(event);
 
                mLastMotionY = y - mScrollOffset[1];
                if (dispatchNestedScroll(0, 0, 0, deltaY, mScrollOffset)) {
@@ -121,7 +126,7 @@ public class NestedScrollRelativeLayout extends RelativeLayout implements Nested
                int initialVelocity = (int) mVelocityTracker.getYVelocity(mActivePointerId);
 
                if (Math.abs(initialVelocity) > mMinimumVelocity) {
-                  flingWithNestedDispatch(-initialVelocity)  ;
+                  flingWithNestedDispatch(-initialVelocity);
                }
             }
             mActivePointerId = INVALID_POINTER;

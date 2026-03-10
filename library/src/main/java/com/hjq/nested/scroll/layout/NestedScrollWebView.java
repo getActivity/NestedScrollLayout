@@ -97,24 +97,25 @@ public class NestedScrollWebView extends WebView implements NestedScrollingChild
                     mNestedOffsetY += mScrollOffset[1];
                 }
 
-                if(mScrollConsumed[1] == 0 && mScrollOffset[1] == 0) {
-                    if(mChange) {
-                        mChange =false;
+                if (mScrollConsumed[1] == 0 && mScrollOffset[1] == 0) {
+                    if (mChange) {
+                        mChange = false;
                         trackedEvent.setAction(MotionEvent.ACTION_DOWN);
                         super.onTouchEvent(trackedEvent);
                     } else {
                         result = super.onTouchEvent(trackedEvent);
                     }
                     trackedEvent.recycle();
-                } else{
-                    if(!mChange) {
+                } else {
+                    if (!mChange) {
                         mChange = true;
-                        super.onTouchEvent(MotionEvent.obtain(0,0,MotionEvent.ACTION_CANCEL,0,0,0));
+                        MotionEvent cancelEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(),
+                                                    MotionEvent.ACTION_CANCEL, 0, 0, 0);
+                        super.onTouchEvent(cancelEvent);
+                        cancelEvent.recycle();
                     }
+                    trackedEvent.recycle();
                 }
-
-                //result = super.onTouchEvent(trackedEvent);
-                //trackedEvent.recycle();
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
             case MotionEvent.ACTION_POINTER_UP:
