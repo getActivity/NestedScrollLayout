@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NestedScrollLayout</string>
+    <string name="frame_layout_text">我是 NestedScrollFrameLayout</string>
+    <string name="linear_layout_text">我是 NestedScrollLinearLayout</string>
+    <string name="relative_layout_text">我是 NestedScrollRelativeLayout</string>
+</resources>
