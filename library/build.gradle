@@ -5,8 +5,8 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        versionCode 20
-        versionName "2.0"
+        versionCode 30
+        versionName "3.0"
     }
 
     android.libraryVariants.configureEach { variant ->

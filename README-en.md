@@ -4,7 +4,7 @@
 
 * Project address: [Github](https://github.com/getActivity/NestedScrollLayout)
 
-* [Click here to download demo apk directly](https://github.com/getActivity/NestedScrollLayout/releases/download/2.0/NestedScrollLayout.apk)
+* [Click here to download demo apk directly](https://github.com/getActivity/NestedScrollLayout/releases/download/3.0/NestedScrollLayout.apk)
 
 * As we all know, WebView, LinearLayout, FrameLayout, and RelativeLayout do not support the NestedScroll feature, so this library was created specifically to solve this problem.
 
@@ -47,7 +47,7 @@ android {
 
 dependencies {
     // Nested Scroll Layout: https://github.com/getActivity/NestedScrollLayout
-    implementation 'com.github.getActivity:NestedScrollLayout:2.0'
+    implementation 'com.github.getActivity:NestedScrollLayout:3.0'
 }
 ```
 

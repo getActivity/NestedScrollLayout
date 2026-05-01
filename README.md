@@ -4,7 +4,7 @@
 
 * 项目地址：[Github](https://github.com/getActivity/NestedScrollLayout)
 
-* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/NestedScrollLayout/releases/download/2.0/NestedScrollLayout.apk)
+* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/NestedScrollLayout/releases/download/3.0/NestedScrollLayout.apk)
 
 ![](picture/download_demo_apk_qr_code.png)
 
@@ -49,7 +49,7 @@ android {
 
 dependencies {
     // 嵌套滚动布局：https://github.com/getActivity/NestedScrollLayout
-    implementation 'com.github.getActivity:NestedScrollLayout:2.0'
+    implementation 'com.github.getActivity:NestedScrollLayout:3.0'
 }
 ```
 
