@@ -59,7 +59,7 @@ dependencies {
 
 ```
 dependencies {
-    // Nested Scroll Layout: https://github.com/getActivity/NestedScrollLayout
+    // 嵌套滚动布局：https://github.com/getActivity/NestedScrollLayout
     implementation 'com.github.getActivity:NestedScrollLayout:2.0'
 }
 ```
